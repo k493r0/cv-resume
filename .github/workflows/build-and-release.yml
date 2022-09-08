@@ -22,6 +22,7 @@ jobs:
             coverletter.tex
             resume.tex
           latexmk_use_xelatex: true
+          args: -xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
           
       - name: Create Release
         id: create_release
