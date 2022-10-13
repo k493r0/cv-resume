@@ -22,20 +22,14 @@ jobs:
           latexmk_use_xelatex: true
           args: -xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
           
-      - name: Get current time
-        id: time
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-        env: 
-          CURR_TIME: ${{steps.time.outputs.time}}
-          
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
       - name: Test with environment variables
         run: echo $TAG_NAME - $RELEASE_NAME
         env:
           TAG_NAME: update-${{ steps.date.outputs.date }}
-          RELEASE_NAME: ${{ steps.date.outputs.date }}-${{env.CURR_TIME}} Update
+          RELEASE_NAME: ${{ steps.date.outputs.date }} Update
         
       - name: Create Release
         id: create_release
