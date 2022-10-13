@@ -26,7 +26,7 @@ jobs:
         id: formatted-date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
         env:
-          FORMAT_DATE: ${{teps.formatted-date.outputs.date}}
+          FORMAT_DATE: ${{steps.formatted-date.outputs.date}}
         
           
       - name: Get current date
