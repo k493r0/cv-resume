@@ -16,12 +16,10 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+        uses: dante-ev/latex-action@latest
         with:
-          root_file: | 
-            cv.tex
-          latexmk_use_xelatex: true
-          args: -file-line-error -interaction=nonstopmode -synctex=1
+          root_file: cv.tex
+          args: -xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -synctex=1
       
       - name: Get current date
         id: date
