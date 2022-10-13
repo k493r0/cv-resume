@@ -22,18 +22,6 @@ jobs:
           latexmk_use_xelatex: true
           args: -xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
       
-      - id: release
-        uses: rymndhng/release-on-push-action@master
-        with:
-          bump_version_scheme: minor
-          tag_prefix: v
-          
-      - name: Check Output Parameters
-        run: |
-          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
-          echo "Got release version ${{ steps.release.outputs.version }}"  
-    
-      
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
@@ -49,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.release.outputs.tag_name }}
+          tag_name: update-${{ steps.date.outputs.date }}
           release_name: Release ${{ steps.release.outputs.version }}
           draft: false
           prerelease: false
