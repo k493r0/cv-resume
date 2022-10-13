@@ -14,12 +14,14 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
+        
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
           root_file: | 
             cv.tex
           latexmk_use_xelatex: true
+          args: -file-line-error -interaction=nonstopmode -synctex=1
       
       - name: Get current date
         id: date
