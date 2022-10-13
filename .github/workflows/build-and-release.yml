@@ -22,6 +22,13 @@ jobs:
           latexmk_use_xelatex: true
           args: -xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
           
+      - name: get current date (Formatted)
+        id: formatted-date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        env:
+          FORMAT_DATE: ${{teps.formatted-date.outputs.date}}
+        
+          
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
@@ -29,7 +36,7 @@ jobs:
         run: echo $TAG_NAME - $RELEASE_NAME
         env:
           TAG_NAME: update-${{ steps.date.outputs.date }}
-          RELEASE_NAME: ${{ steps.date.outputs.date }} Update
+          RELEASE_NAME: ${{ env.FORMAT_DATE }} Update
         
       - name: Create Release
         id: create_release
@@ -38,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.RELEASE_NAME }}
+          release_name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
 
